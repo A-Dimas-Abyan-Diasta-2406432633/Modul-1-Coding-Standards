@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.10"
     id("io.spring.dependency-management") version "1.1.7"
+    jacoco
 }
 
 group = "id.ac.ui.cs.advprog"
@@ -47,6 +48,9 @@ dependencies {
 tasks.register<Test>("unitTest") {
     description = "Runs unit tests."
     group = "verification"
+    val testSourceSet = sourceSets.test.get()
+    testClassesDirs = testSourceSet.output.classesDirs
+    classpath = testSourceSet.runtimeClasspath
 
     filter {
         excludeTestsMatching("*FunctionalTest")
@@ -56,9 +60,26 @@ tasks.register<Test>("unitTest") {
 tasks.register<Test>("functionalTest") {
     description = "Runs functional tests."
     group = "verification"
+    val testSourceSet = sourceSets.test.get()
+    testClassesDirs = testSourceSet.output.classesDirs
+    classpath = testSourceSet.runtimeClasspath
 
     filter {
         includeTestsMatching("*FunctionalTest")
+    }
+}
+
+tasks.register<JacocoReport>("jacocoUnitTestReport") {
+    description = "Generates JaCoCo coverage report for unit tests."
+    group = "verification"
+
+    dependsOn(tasks.named("unitTest"))
+    executionData.setFrom(file("$buildDir/jacoco/unitTest.exec"))
+    sourceDirectories.setFrom(sourceSets.main.get().allSource.srcDirs)
+    classDirectories.setFrom(sourceSets.main.get().output)
+    reports {
+        html.required.set(true)
+        xml.required.set(true)
     }
 }
 
