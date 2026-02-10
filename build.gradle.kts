@@ -42,6 +42,9 @@ dependencies {
     testImplementation("org.seleniumhq.selenium:selenium-java:$seleniumJavaVersion")
     testImplementation("io.github.bonigarcia:selenium-jupiter:$seleniumJupiterVersion")
     testImplementation("io.github.bonigarcia:webdrivermanager:$webdrivermanagerVersion")
+    testImplementation("org.seleniumhq.selenium:selenium-java:4.14.1")
+    testImplementation("io.github.bonigarcia:selenium-jupiter:5.0.1")
+    testImplementation("io.github.bonigarcia:webdrivermanager:5.6.3")
 }
 
 tasks.register<Test>("unitTest") {
