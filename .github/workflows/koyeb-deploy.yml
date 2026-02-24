@@ -1,0 +1,28 @@
+name: Deploy to Koyeb
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    concurrency:
+      group: "${{ github.ref_name }}"
+      cancel-in-progress: true
+    steps:
+      - name: Install and configure the Koyeb CLI
+        uses: koyeb-community/koyeb-actions@v2
+        with:
+          api_token: "${{ secrets.KOYEB_API_TOKEN }}"
+      - name: Build and deploy the application to Koyeb
+        uses: koyeb/action-git-deploy@v1
+        with:
+          service-env: PORT=8080
+          service-ports: "8080:http"
+          service-routes: "/:8080"
+          git-url: "github.com/${{ github.repository }}"
+          git-branch: "${{ github.ref_name }}"
+          git-builder: docker
+          git-docker-dockerfile: Dockerfile
