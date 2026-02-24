@@ -61,3 +61,12 @@ Kalau bikin functional test suite baru yang setup-nya sama persis, ini bikin **c
 Dengan begini, functional test jadi clean dan perubahan setup cukup di satu tempat.
 
 </details>
+
+## Refleksi (Module 2 - CI/CD)
+
+1. **Code quality issue yang diperbaiki + strategi**  
+Saya memperbaiki issue SonarCloud “method kosong” pada `contextLoads()` di `EshopApplicationTests`.  
+Strateginya adalah menambahkan assert sederhana (`assertNotNull(applicationContext)`) supaya test benar-benar memverifikasi konteks Spring ter-load, bukan sekadar empty test. Ini membuat test lebih bermakna dan menghilangkan code smell.
+
+2. **Apakah sudah memenuhi CI & CD? (min. 3 kalimat)**  
+Menurut saya implementasi ini sudah memenuhi Continuous Integration karena setiap push/PR menjalankan workflow otomatis: build, test, dan analisis kualitas (SonarCloud). Ini memastikan perubahan selalu diuji dan dianalisis sebelum digabung ke branch utama. Implementasi juga memenuhi Continuous Deployment karena setelah merge ke `main`, workflow deploy ke Koyeb berjalan otomatis dan aplikasi ter-deploy tanpa langkah manual tambahan.
