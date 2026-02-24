@@ -83,6 +83,18 @@ tasks.register<JacocoReport>("jacocoUnitTestReport") {
     }
 }
 
+tasks.test {
+    filter {
+        excludeTestsMatching("*FunctionalTest")
+    }
+
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+}
+
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
