@@ -29,6 +29,7 @@ class CarServiceImplTest {
         car.setCarName("Sedan");
         car.setCarColor("Black");
         car.setCarQuantity(2);
+        when(carRepository.create(car)).thenReturn(car);
 
         Car result = service.create(car);
 
