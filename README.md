@@ -62,7 +62,7 @@ Dengan begini, functional test jadi clean dan perubahan setup cukup di satu temp
 
 </details>
 
-## Refleksi (Module 3 - CI/CD)
+## Refleksi (Module 2 - CI/CD)
 
 1. **Code quality issue yang diperbaiki + strategi**  
 Saya memperbaiki issue SonarCloud “method kosong” pada `contextLoads()` di `EshopApplicationTests`.  
@@ -71,7 +71,7 @@ Strateginya adalah menambahkan assert sederhana (`assertNotNull(applicationConte
 2. **Apakah sudah memenuhi CI & CD? (min. 3 kalimat)**  
 Menurut saya implementasi ini sudah memenuhi Continuous Integration karena setiap push/PR menjalankan workflow otomatis: build, test, dan analisis kualitas (SonarCloud). Ini memastikan perubahan selalu diuji dan dianalisis sebelum digabung ke branch utama. Implementasi juga memenuhi Continuous Deployment karena setelah merge ke `main`, workflow deploy ke Koyeb berjalan otomatis dan aplikasi ter-deploy tanpa langkah manual tambahan.
 
-## Refleksi (Module 2 - SOLID)
+## Refleksi (Module 3 - SOLID)
 
 1. Explain what principles you apply to your project.
 SRP: Saya pisahkan `CarController` dari `ProductController`, dan memindahkan logika CRUD umum ke `BaseCrudService`, sehingga tiap class punya satu tanggung jawab utama.
