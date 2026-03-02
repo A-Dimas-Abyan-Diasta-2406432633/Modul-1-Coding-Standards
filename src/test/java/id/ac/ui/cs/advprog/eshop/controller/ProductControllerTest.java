@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Product;
+import id.ac.ui.cs.advprog.eshop.service.CarServiceImpl;
 import id.ac.ui.cs.advprog.eshop.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,14 @@ class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private CarServiceImpl carService;
+
     @Test
     void createProductPage_returnsViewWithModel() throws Exception {
         mockMvc.perform(get("/product/create"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("CreateProduct"))
+                .andExpect(view().name("createProduct"))
                 .andExpect(model().attributeExists("product"));
     }
 
@@ -59,7 +63,7 @@ class ProductControllerTest {
 
         mockMvc.perform(get("/product/list"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("ProductList"))
+                .andExpect(view().name("productList"))
                 .andExpect(model().attribute("products", hasSize(1)));
     }
 
@@ -73,7 +77,7 @@ class ProductControllerTest {
 
         mockMvc.perform(get("/product/edit/id-1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("EditProduct"))
+                .andExpect(view().name("editProduct"))
                 .andExpect(model().attribute("product", samePropertyValuesAs(product)));
     }
 
@@ -91,9 +95,10 @@ class ProductControllerTest {
 
     @Test
     void deleteProduct_redirectsToList() throws Exception {
-        mockMvc.perform(get("/product/delete/id-3"))
+        mockMvc.perform(post("/product/delete")
+                        .param("productId", "id-3"))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/product/list"));
+                .andExpect(redirectedUrl("list"));
 
         verify(productService).delete("id-3");
     }

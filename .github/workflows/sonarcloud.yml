@@ -20,7 +20,9 @@ jobs:
           java-version: "21"
           cache: gradle
       - name: Build
-        run: ./gradlew test
+        run: ./gradlew test jacocoTestReport
+      - name: Verify JaCoCo report
+        run: ls -la build/reports/jacoco/test/jacocoTestReport.xml
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v3
         env:
@@ -31,4 +33,5 @@ jobs:
             -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }}
             -Dsonar.sources=src/main/java
             -Dsonar.tests=src/test/java
-            -Dsonar.java.binaries=build/classes
+            -Dsonar.java.binaries=build/classes/java/main
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
