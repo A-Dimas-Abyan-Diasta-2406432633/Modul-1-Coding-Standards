@@ -62,7 +62,7 @@ Dengan begini, functional test jadi clean dan perubahan setup cukup di satu temp
 
 </details>
 
-## Refleksi (Module 2 - CI/CD)
+## Refleksi (Module 3 - CI/CD)
 
 1. **Code quality issue yang diperbaiki + strategi**  
 Saya memperbaiki issue SonarCloud “method kosong” pada `contextLoads()` di `EshopApplicationTests`.  
