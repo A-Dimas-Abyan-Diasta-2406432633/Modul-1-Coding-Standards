@@ -28,6 +28,7 @@ class ProductServiceImplTest {
         Product product = new Product();
         product.setProductName("Item");
         product.setProductQuantity(3);
+        when(productRepository.create(product)).thenReturn(product);
 
         Product result = service.create(product);
 

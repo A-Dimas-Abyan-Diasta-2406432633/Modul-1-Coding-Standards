@@ -71,6 +71,26 @@ Strateginya adalah menambahkan assert sederhana (`assertNotNull(applicationConte
 2. **Apakah sudah memenuhi CI & CD? (min. 3 kalimat)**  
 Menurut saya implementasi ini sudah memenuhi Continuous Integration karena setiap push/PR menjalankan workflow otomatis: build, test, dan analisis kualitas (SonarCloud). Ini memastikan perubahan selalu diuji dan dianalisis sebelum digabung ke branch utama. Implementasi juga memenuhi Continuous Deployment karena setelah merge ke `main`, workflow deploy ke Koyeb berjalan otomatis dan aplikasi ter-deploy tanpa langkah manual tambahan.
 
+## Refleksi (Module 3 - SOLID)
+
+<details>
+  <summary><strong>Refleksi 3 (SOLID)</strong></summary>
+
+1. Explain what principles you apply to your project.  
+SRP: Saya pisahkan `CarController` dari `ProductController`, dan memindahkan logika CRUD umum ke `BaseCrudService` sehingga tiap class punya satu tanggung jawab utama.  
+OCP: Saya buat `InMemoryCrudRepository<T>` dan `CrudService<T>`, jadi menambah entity baru cukup membuat model + repository/service turunan tanpa mengubah logic CRUD dasar.  
+LSP: Saya menghapus inheritance `CarController extends ProductController` karena tidak substitutable; semua controller berdiri sendiri dan tidak melanggar kontrak superclass.  
+ISP: Saya gunakan interface yang fokus (`CrudService` dan `CrudRepository`) agar class hanya bergantung pada operasi yang relevan.  
+DIP: Controller bergantung ke `ProductService`/`CarService` (abstraksi), dan service bergantung ke `CrudRepository<T>`, bukan implementasi konkret.
+
+2. Explain the advantages of applying SOLID principles to your project with examples.  
+Code jadi lebih mudah diperluas dan diuji. Contoh: menambah entity baru bisa memakai `InMemoryCrudRepository<T>` tanpa copy-paste logic CRUD. Controller juga lebih mudah di-mock karena hanya bergantung pada interface, sehingga unit test lebih stabil.
+
+3. Explain the disadvantages of not applying SOLID principles to your project with examples.  
+Tanpa SOLID, code mudah duplikasi dan coupling tinggi. Contoh: ketika `CarController` mewarisi `ProductController`, `@WebMvcTest` ikut memuat dependency yang tidak relevan dan menyebabkan test gagal. Selain itu, duplikasi CRUD di service/repository membuat perubahan kecil harus diubah di banyak tempat.
+
+</details>
+
 ## Informasi Deploy & Repositori
 
 - **Deployment URL (Koyeb)**: https://xenogeneic-agnella-dimasabyandad-54ea2aaa.koyeb.app/product/list

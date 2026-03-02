@@ -29,6 +29,7 @@ class CarServiceImplTest {
         car.setCarName("Sedan");
         car.setCarColor("Black");
         car.setCarQuantity(2);
+        when(carRepository.create(car)).thenReturn(car);
 
         Car result = service.create(car);
 
@@ -83,7 +84,7 @@ class CarServiceImplTest {
 
     @Test
     void delete_delegatesToRepository() {
-        service.deleteCarById("id-3");
+        service.delete("id-3");
 
         verify(carRepository).delete("id-3");
     }
