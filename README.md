@@ -76,3 +76,49 @@ Menurut saya implementasi ini sudah memenuhi Continuous Integration karena setia
 - **Deployment URL (Koyeb)**: https://xenogeneic-agnella-dimasabyandad-54ea2aaa.koyeb.app/product/list
 - **Repository**: https://github.com/B-Dimas-Abyan-Diasta-2406432633/Modul-1-Coding-Standards
 - **Branch**: `module-2-exercise` (merged ke `main`)
+
+## Refleksi (Module 3 - SOLID)
+
+<details>
+  <summary><strong>Refleksi 3 (SOLID)</strong></summary>
+
+1. **Explain what principles you apply to your project.**  
+SRP: Saya pisahkan `CarController` dari `ProductController`, dan memindahkan logika CRUD umum ke `BaseCrudService` sehingga tiap class punya satu tanggung jawab utama.  
+OCP: Saya buat `InMemoryCrudRepository<T>` dan `CrudService<T>`, jadi menambah entity baru cukup membuat model + repository/service turunan tanpa mengubah logic CRUD dasar.  
+LSP: Saya menghapus inheritance `CarController extends ProductController` karena tidak substitutable; semua controller berdiri sendiri dan tidak melanggar kontrak superclass.  
+ISP: Saya gunakan interface yang fokus (`CrudService` dan `CrudRepository`) agar class hanya bergantung pada operasi yang relevan.  
+DIP: Controller bergantung ke `ProductService`/`CarService` (abstraksi), dan service bergantung ke `CrudRepository<T>`, bukan implementasi konkret.
+
+2. **Explain the advantages of applying SOLID principles to your project with examples.**  
+Code jadi lebih mudah diperluas dan diuji. Contoh: menambah entity baru bisa memakai `InMemoryCrudRepository<T>` tanpa copy-paste logic CRUD. Controller juga lebih mudah di-mock karena hanya bergantung pada interface, sehingga unit test lebih stabil.
+
+3. **Explain the disadvantages of not applying SOLID principles to your project with examples.**  
+Tanpa SOLID, code mudah duplikasi dan coupling tinggi. Contoh: ketika `CarController` mewarisi `ProductController`, `@WebMvcTest` ikut memuat dependency yang tidak relevan dan menyebabkan test gagal. Selain itu, duplikasi CRUD di service/repository membuat perubahan kecil harus diubah di banyak tempat.
+
+</details>
+
+## Refleksi (Module 4 - TDD)
+
+<details>
+  <summary><strong>Refleksi 4 (TDD Workflow & FIRST)</strong></summary>
+
+### 1) Refleksi workflow TDD berdasarkan pertanyaan reflektif Percival (2017)
+
+Menurut saya workflow TDD yang saya jalankan cukup membantu karena memaksa saya mendefinisikan behavior lewat test dulu, lalu implementasi minimal untuk lolos. Ini bikin scope lebih jelas, mengurangi over-engineering, dan cepat ketahuan kalau ada edge case yang kelewat. Tapi saya masih bisa perbaiki dengan:
+
+- **Lebih disiplin di tahap “red”**: kadang saya tergoda nambah logic terlalu banyak di awal. Next time saya akan fokus buat test sekecil mungkin untuk satu behavior.
+- **Lebih eksplisit tentang kriteria keberhasilan**: memastikan tiap test benar-benar assert behavior yang spesifik, bukan sekadar “no error”.
+
+### 2) Apakah test sudah mengikuti prinsip F.I.R.S.T?
+
+Secara umum iya, tapi belum sempurna di semua bagian.
+
+- **Fast**: Unit test cepat karena pakai mock dan repository in-memory.
+- **Independent**: Test tidak saling bergantung karena setup di `@BeforeEach`.
+- **Repeatable**: Hasil konsisten karena tidak bergantung ke external service.
+- **Self-Validating**: Semua test punya assert yang jelas.
+- **Timely**: Test dibuat duluan sebelum implementasi (TDD).
+
+Yang perlu saya tingkatkan: memastikan semua test hanya fokus pada satu perilaku dan mengurangi setup yang berlebihan supaya lebih “Fast” dan “Independent”.
+
+</details>
