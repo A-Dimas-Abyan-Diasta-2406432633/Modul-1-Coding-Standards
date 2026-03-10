@@ -2,7 +2,8 @@ package id.ac.ui.cs.advprog.eshop.model;
 
 import lombok.Builder;
 import lombok.Getter;
-import java.util.Arrays;
+import id.ac.ui.cs.advprog.eshop.enums.OrderStatus;
+
 import java.util.List;
 
 @Builder
@@ -18,7 +19,7 @@ public class Order {
         this.id = id;
         this.orderTime = orderTime;
         this.author = author;
-        this.status = "WAITING_PAYMENT";
+        this.status = OrderStatus.WAITING_PAYMENT.getValue();
 
         if (products.isEmpty()) {
             throw new IllegalArgumentException();
@@ -30,8 +31,7 @@ public class Order {
     public Order(String id, List<Product> products, Long orderTime, String author, String status) {
         this(id, products, orderTime, author);
 
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
+        if (!OrderStatus.contains(status)) {
             throw new IllegalArgumentException();
         } else {
             this.status = status;
@@ -39,8 +39,7 @@ public class Order {
     }
 
     public void setStatus(String status) {
-        String[] statusList = {"WAITING_PAYMENT", "FAILED", "SUCCESS", "CANCELLED"};
-        if (Arrays.stream(statusList).noneMatch(item -> item.equals(status))) {
+        if (!OrderStatus.contains(status)) {
             throw new IllegalArgumentException();
         } else {
             this.status = status;
