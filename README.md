@@ -71,12 +71,6 @@ Strateginya adalah menambahkan assert sederhana (`assertNotNull(applicationConte
 2. **Apakah sudah memenuhi CI & CD? (min. 3 kalimat)**  
 Menurut saya implementasi ini sudah memenuhi Continuous Integration karena setiap push/PR menjalankan workflow otomatis: build, test, dan analisis kualitas (SonarCloud). Ini memastikan perubahan selalu diuji dan dianalisis sebelum digabung ke branch utama. Implementasi juga memenuhi Continuous Deployment karena setelah merge ke `main`, workflow deploy ke Koyeb berjalan otomatis dan aplikasi ter-deploy tanpa langkah manual tambahan.
 
-## Informasi Deploy & Repositori
-
-- **Deployment URL (Koyeb)**: https://xenogeneic-agnella-dimasabyandad-54ea2aaa.koyeb.app/product/list
-- **Repository**: https://github.com/B-Dimas-Abyan-Diasta-2406432633/Modul-1-Coding-Standards
-- **Branch**: `module-2-exercise` (merged ke `main`)
-
 ## Refleksi (Module 3 - SOLID)
 
 <details>
@@ -122,3 +116,9 @@ Secara umum iya, tapi belum sempurna di semua bagian.
 Yang perlu saya tingkatkan: memastikan semua test hanya fokus pada satu perilaku dan mengurangi setup yang berlebihan supaya lebih “Fast” dan “Independent”.
 
 </details>
+
+# Informasi Deploy & Repositori
+
+- **Deployment URL (Koyeb)**: https://xenogeneic-agnella-dimasabyandad-54ea2aaa.koyeb.app/product/list
+- **Repository**: https://github.com/B-Dimas-Abyan-Diasta-2406432633/Modul-1-Coding-Standards
+- **Branch**: `module-2-exercise` (merged ke `main`)
